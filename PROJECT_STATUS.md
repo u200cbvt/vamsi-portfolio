@@ -6,8 +6,13 @@ Config needed: Supabase project, run migration, create admin user + insert into 
 Verify: GitHub handle in lib/content.ts looks unusual.
 Next steps: (1) Stage 3 admin under /admin with Supabase Auth + middleware + server actions checking is_admin(); (2) DB-backed profile/skills/education; (3) uploads with server-side type/size checks; (4) docs, tests, deployment guide.
 
-## Deployment automation check (2026-10-24)
-GitHub: connected as u200cbvt, but the integration is read-limited for repo creation (create repository returned 403 "Resource not accessible by integration"). No existing portfolio repo found. Nothing pushed.
-Supabase: connector works, but the account has 0 projects. No project created (needs the owner's choice of organization, region, database password).
-Vercel: no integration available in this session. Not deployed.
-Manual steps left: create empty private GitHub repo "vamsi-portfolio" and upload the ZIP contents; create Supabase project and run supabase/migrations/0001_init.sql; connect repo to Vercel with env vars from .env.example.
+## Stage 3 (admin) - built 2026-10-26
+Done: /admin login (Supabase Auth, no public signup), middleware + server-side requireAdmin() on every admin page and action (signed in AND in public.admins); dashboard with real counts; project list with status filter; create/edit/delete with confirmation; draft/publish/archive, feature, sort order; thumbnail upload with server-side type (JPG/PNG/WebP) and size (2 MB) checks, failed upload aborts the save. Writes use the user's session + anon key, so RLS is the final gate; no service-role key is used.
+Tested (local only): npm run build + tsc pass; running server redirects /admin, /admin/projects, /admin/projects/new to login when signed out; /admin/login and / return 200.
+NOT tested against real Supabase: login, create/edit/publish, uploads, draft privacy. Do these first after deploy (see TESTING below).
+Not done: cover/gallery images, file deliverables, reorder UI, preview page, profile/resume/skills/education editing from admin (still lib/content.ts), password reset, automated tests, remaining docs, DEPLOYMENT_GUIDE.md.
+Supabase project qffxhsiqjskvylccmscz: migration applied, 6 tables with RLS, bucket public-assets. Advisor warning on is_admin() accepted (RLS policies depend on it).
+GitHub repo u200cbvt/vamsi-portfolio: foundation committed by owner. Claude's GitHub connector is read-only (403 on branch creation), so code must be uploaded manually.
+Vercel: not connected.
+Create the admin: Supabase > Authentication > Users > Add user (auto confirm), then SQL: insert into public.admins (user_id) select id from auth.users where email = 'YOUR_EMAIL';
+Next steps: deploy on Vercel with env vars; run the live test checklist; then profile/resume editing, cover/gallery/files, reorder, preview, docs, tests.
