@@ -24,3 +24,8 @@ export const education = [
   { title: "Bachelor of Computer Applications (BCA)", place: "Elite Degree College, Dubacherla, Andhra Pradesh", note: "Completed 2026" },
   { title: "Data Analytics training", place: "Innomatics Research Labs, Hyderabad", note: "Completed" },
 ];
+export const aboutCards = [
+  { title: "Background", text: "BCA graduate, then Data Analytics training at Innomatics Research Labs, Hyderabad." },
+  { title: "How I work", text: "Understand the business question, clean and explore the data, then explain what it means and where it falls short." },
+  { title: "What I want next", text: "An entry-level Data Analyst, Business Analyst or MIS role where I keep learning on real business problems." },
+];

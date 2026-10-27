@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProject } from "@/lib/projects";
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const p = await getProject(params.slug);
   return p ? { title: p.title, description: p.summary ?? undefined } : { title: "Project not found" };

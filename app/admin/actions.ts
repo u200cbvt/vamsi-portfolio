@@ -18,9 +18,10 @@ export async function saveProject(f: FormData) {
   const s = await requireAdmin();
   const id = str(f, "id");
   const back = `/admin/projects/${id ?? "new"}`;
-  const title = str(f, "title"), slug = str(f, "slug");
+  const title = str(f, "title");
   if (!title) fail(back, "Title is required.");
-  if (!slug || !/^[a-z0-9-]+$/.test(slug)) fail(back, "Slug must use lowercase letters, numbers and hyphens only.");
+  const slug = String(str(f, "slug") ?? title).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  if (!slug) fail(back, "Use some letters or numbers in the title.");
   for (const k of ["github_url", "live_url"]) { const v = str(f, k); if (v && !/^https?:\/\//.test(v)) fail(back, `${k.replace("_", " ")} must start with http:// or https://`); }
   const status = str(f, "status") ?? "draft";
   if (!["draft", "published", "archived"].includes(status)) fail(back, "Invalid status.");
@@ -48,7 +49,7 @@ export async function saveProject(f: FormData) {
   };
   const { error } = id ? await s.from("projects").update(row).eq("id", id) : await s.from("projects").insert(row);
   if (error) fail(back, error.code === "23505" ? "That slug is already used by another project." : "Could not save the project.");
-  revalidatePath("/"); revalidatePath("/projects");
+  revalidatePath("/", "layout");
   redirect("/admin/projects?saved=1");
 }
 
@@ -56,6 +57,6 @@ export async function deleteProject(id: string) {
   const s = await requireAdmin();
   const { error } = await s.from("projects").delete().eq("id", id);
   if (error) fail("/admin/projects", "Could not delete the project.");
-  revalidatePath("/projects");
+  revalidatePath("/", "layout");
   redirect("/admin/projects?saved=1");
 }

@@ -12,10 +12,11 @@ export default async function EditProject({ params, searchParams }: { params: { 
     <>
       <h1 className="font-display text-3xl">{isNew ? "Add project" : "Edit project"}</h1>
       {searchParams.error && <p role="alert" className="mt-4 rounded border border-red-400/60 p-3 text-red-300">{searchParams.error}</p>}
+      <p className="mt-2 text-mute">Only the title is required. Anything you leave blank simply will not appear on the website. Your GitHub repositories already show up automatically; add a project here only to write a full case study.</p>
       <form action={saveProject} className="mt-6 space-y-4">
         {!isNew && <input type="hidden" name="id" value={p.id} />}
-        <label className="block">Title<input name="title" required defaultValue={p.title ?? ""} className={inp} /></label>
-        <label className="block">URL slug (lowercase, hyphens)<input name="slug" required pattern="[a-z0-9-]+" defaultValue={p.slug ?? ""} className={inp} /></label>
+        <label className="block">Title (required)<input name="title" required defaultValue={p.title ?? ""} className={inp} /></label>
+        <label className="block">URL slug (optional, made from the title if empty)<input name="slug" defaultValue={p.slug ?? ""} className={inp} /></label>
         <label className="block">Category<input name="category" defaultValue={p.category ?? ""} placeholder="SQL, Power BI, EDA…" className={inp} /></label>
         <label className="block">Tools (comma separated)<input name="tools" defaultValue={(p.tools ?? []).join(", ")} className={inp} /></label>
         {text.map(([k, l]) => <label key={k} className="block">{l}<textarea name={k} rows={k === "summary" ? 2 : 4} defaultValue={p[k] ?? ""} className={inp} /></label>)}

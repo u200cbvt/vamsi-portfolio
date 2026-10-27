@@ -16,3 +16,8 @@ GitHub repo u200cbvt/vamsi-portfolio: foundation committed by owner. Claude's Gi
 Vercel: not connected.
 Create the admin: Supabase > Authentication > Users > Add user (auto confirm), then SQL: insert into public.admins (user_id) select id from auth.users where email = 'YOUR_EMAIL';
 Next steps: deploy on Vercel with env vars; run the live test checklist; then profile/resume editing, cover/gallery/files, reorder, preview, docs, tests.
+
+## Version 2 (2026-10-27)
+Changes: full uncropped portrait with 3D tilt/zoom on hover; "V" logo mark; rotating role text (Data Analyst, Business Analyst, MIS Executive, Power BI Reporting); scroll reveals; spotlight/lift hover on cards, chips, buttons; public GitHub repos auto-listed as projects and used for a languages summary (cached 1h, no upload needed); admin slug auto-generated from title and only title required; public pages use 60s revalidation and admin saves revalidate immediately.
+Tested locally: tsc + build pass. Not browser-tested for visuals/mobile by Claude. Live site not re-tested.
+Next: review visuals with the owner (reference sites), mobile pass, profile/resume editing, cover/gallery/files, preview, tests, docs.

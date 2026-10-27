@@ -4,9 +4,12 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-ink/90 backdrop-blur">
       <nav aria-label="Main" className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <Link href="/" className="font-display text-lg">Vamsi</Link>
+        <Link href="/" aria-label="Vamsi home" className="group flex items-center gap-2">
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent font-display text-lg font-bold text-ink transition group-hover:rotate-6 group-hover:scale-110">V</span>
+          <span className="font-display text-lg transition group-hover:text-accent">Vamsi</span>
+        </Link>
         <ul className="hidden gap-6 text-sm text-mute md:flex">
-          {links.map(([l, h]) => <li key={l}><Link href={h} className="hover:text-paper">{l}</Link></li>)}
+          {links.map(([l, h]) => <li key={l}><Link href={h} className="ulink transition hover:text-paper">{l}</Link></li>)}
         </ul>
         <details className="relative md:hidden">
           <summary className="cursor-pointer list-none rounded border border-line px-3 py-1.5 text-sm">Menu</summary>
