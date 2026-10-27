@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { site, skillGroups, education, aboutCards } from "@/lib/content";
+import { site, skillGroups, education, aboutCards, about, inProgress } from "@/lib/content";
 import { getProjects } from "@/lib/projects";
-import { getRepos, langCounts } from "@/lib/github";
+import { getRepos } from "@/lib/github";
 import ProjectCard, { type CardItem } from "@/components/ProjectCard";
 import RoleCycler from "@/components/RoleCycler";
 import Tilt from "@/components/Tilt";
@@ -14,8 +14,10 @@ export default async function Home() {
   const items: CardItem[] = [
     ...projects.map((p) => ({ key: p.id, title: p.title, summary: p.summary, category: p.category, tools: p.tools ?? [], href: `/projects/${p.slug}`, thumbnail: p.thumbnail_url, featured: p.featured })),
     ...gh.map((r) => ({ key: r.name, title: r.title, summary: r.description, category: r.language, href: r.url, external: true })),
+    ...inProgress,
   ].slice(0, 6);
-  const langs = langCounts(repos);
+  const repoText = repos.map((r) => ({ r, s: `${r.name} ${r.description ?? ""}`.toLowerCase() }));
+  const proof = (keys: string[]) => keys.length ? repoText.filter(({ s }) => keys.some((k) => s.includes(k))).map(({ r }) => r) : [];
   return (
     <>
       <section className="glow">
@@ -24,7 +26,8 @@ export default async function Home() {
             <p className="text-mute">Hello, I am Vamsi. Aspiring</p>
             <p className="mt-1 font-display text-3xl md:text-4xl"><RoleCycler /></p>
             <h1 className="mt-6 font-display text-4xl leading-[1.1] md:text-6xl">{site.headline}</h1>
-            <p className="mt-6 max-w-xl text-lg text-mute">{site.intro}</p>
+            <p className="mt-5 max-w-xl font-display text-xl italic text-[#f2b866]">{site.sub}</p>
+            <p className="mt-4 max-w-xl text-lg text-mute">{site.intro}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/projects" className="btn bg-accent font-medium text-ink hover:shadow-[0_8px_24px_-8px_#7c83ff]">View projects <span className="arr">→</span></Link>
               <Link href="/#resume" className="btn border border-line hover:border-accent">Resume</Link>
@@ -41,12 +44,18 @@ export default async function Home() {
         </div>
       </section>
 
+      <section aria-label="At a glance" className="mx-auto max-w-6xl px-5">
+        <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          {[["BCA 2026", "CGPA 8.2"], ["Data Analytics training", "Innomatics Research Labs"], [`${repos.length + inProgress.length} projects`, "GitHub and in progress"], ["Python · SQL", "Power BI · Excel"]].map(([a, b]) => <li key={a}><Spot className="p-4"><p className="font-display text-lg">{a}</p><p className="text-sm text-mute">{b}</p></Spot></li>)}
+        </ul>
+      </section>
+
       <section id="about" className="mx-auto max-w-6xl px-5 py-14">
-        <Reveal><h2 className="font-display text-3xl">About</h2></Reveal>
+        <Reveal><h2 className="font-display text-3xl">About</h2><p className="mt-4 max-w-3xl text-lg leading-relaxed text-paper/85">{about}</p></Reveal>
         <div className="mt-6 grid gap-5 md:grid-cols-3">
-          {aboutCards.map((c, i) => (<Reveal key={c.title} delay={i * 120} className="h-full"><Spot className="h-full p-6"><h3 className="font-display text-xl text-accent">{c.title}</h3><p className="mt-3 text-paper/85">{c.text}</p></Spot></Reveal>))}
+          {aboutCards.map((c, i) => (<Reveal key={c.title} delay={i * 120} className="h-full"><Spot className="h-full p-6"><h3 className="font-display text-xl text-[#f2b866]">{c.title}</h3><p className="mt-3 text-paper/85">{c.text}</p></Spot></Reveal>))}
         </div>
-        {repos.length > 0 && <Reveal delay={200}><p className="mt-6 text-mute">{repos.length} public GitHub {repos.length === 1 ? "repository" : "repositories"}, updated automatically.</p></Reveal>}
+        {repos.length > 0 && <Reveal delay={200}><p className="mt-6 text-mute">Projects below update automatically from my GitHub.</p></Reveal>}
       </section>
 
       <section id="projects" className="mx-auto max-w-6xl px-5 py-14">
@@ -57,11 +66,16 @@ export default async function Home() {
       </section>
 
       <section id="skills" className="mx-auto max-w-6xl px-5 py-14">
-        <Reveal><h2 className="font-display text-3xl">Skills</h2></Reveal>
+        <Reveal><h2 className="font-display text-3xl">Skills</h2><p className="mt-2 text-mute">Each skill links to the work where I used it.</p></Reveal>
         <div className="mt-6 grid gap-5 md:grid-cols-3">
-          {skillGroups.map((g, i) => (<Reveal key={g.title} delay={i * 120} className="h-full"><Spot className="h-full p-6"><h3 className="font-medium">{g.title}</h3><ul className="mt-4 flex flex-wrap gap-2">{g.items.map((s) => <li key={s} className="chip text-sm text-mute">{s}</li>)}</ul></Spot></Reveal>))}
+          {skillGroups.map((g, i) => {
+            const used = Array.from(new Map(g.items.flatMap((s) => proof(s.keys)).map((r) => [r.name, r])).values());
+            return (<Reveal key={g.title} delay={i * 120} className="h-full"><Spot className="h-full p-6"><h3 className="font-medium text-[#f2b866]">{g.title}</h3>
+              <ul className="mt-4 flex flex-wrap gap-2">{g.items.map((s) => <li key={s.name} className="chip text-sm text-paper/90">{s.name}</li>)}</ul>
+              {used.length > 0 && <p className="mt-5 text-sm text-mute">Used in: {used.map((r, j) => <span key={r.name}>{j > 0 && ", "}<a href={r.url} target="_blank" rel="noopener noreferrer" className="text-accent underline">{r.title}</a></span>)}</p>}
+            </Spot></Reveal>);
+          })}
         </div>
-        {langs.length > 0 && (<Reveal delay={150}><h3 className="mt-10 font-medium">Languages in my repositories</h3><ul className="mt-3 flex flex-wrap gap-2">{langs.map(([l, n]) => <li key={l} className="chip text-sm text-mute">{l} · {n} {n === 1 ? "repo" : "repos"}</li>)}</ul></Reveal>)}
       </section>
 
       <section id="education" className="mx-auto max-w-3xl px-5 py-14">
@@ -71,7 +85,14 @@ export default async function Home() {
 
       <section id="resume" className="mx-auto max-w-3xl px-5 py-14">
         <Reveal><h2 className="font-display text-3xl">Resume</h2>
-          {site.resumeUrl ? <a href={site.resumeUrl} download className="btn mt-5 bg-accent font-medium text-ink">Download resume (PDF) <span className="arr">↓</span></a> : <p className="mt-4 text-mute">The resume is not published yet. Contact me by email for a copy.</p>}</Reveal>
+          <div className="paper mt-6 p-6 md:p-8">
+            <p className="font-display text-2xl">{site.fullName}</p>
+            <p className="text-sm text-[#4a4f5c]">Aspiring Data Analyst / Business Analyst · {site.location}</p>
+            <p className="mt-4 text-sm leading-relaxed">BCA graduate (2026, CGPA 8.2) with Data Analytics training from Innomatics Research Labs, Hyderabad. Builds analyses in Python, SQL and Power BI and explains the findings in business terms.</p>
+            <p className="mt-3 text-sm"><strong>Skills:</strong> Python, SQL, Power BI, Excel, EDA, statistics, web scraping</p>
+            <p className="mt-1 text-sm"><strong>Projects:</strong> Used car market analysis, Global retail sales dashboard, Music store SQL analysis</p>
+          </div>
+          <a href={site.resumeUrl} target="_blank" rel="noopener" className="btn mt-5 bg-accent font-medium text-ink">Open full resume (PDF, ATS-friendly) <span className="arr">↓</span></a></Reveal>
       </section>
 
       <section id="contact" className="mx-auto max-w-3xl px-5 py-14">

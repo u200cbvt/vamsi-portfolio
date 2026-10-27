@@ -22,3 +22,8 @@ body{background:#0f1115;color:#ecebe6}
 .chip:hover{transform:translateY(-2px) scale(1.06);border-color:#7c83ff;color:#ecebe6}
 .glow{background:radial-gradient(600px circle at 70% 20%,rgba(124,131,255,.12),transparent 60%)}
 @media (prefers-reduced-motion:reduce){.tilt,.spot,.btn,.chip,.rv{transition:none!important;transform:none!important}.caret{animation:none}}
+.ulink[aria-current]::after{transform:scaleX(1)}
+.thumb{transition:transform .4s ease}.spot:hover .thumb{transform:scale(1.04)}
+.paper{background:#f4f2ec;color:#16181d;border-radius:12px;transition:transform .25s,box-shadow .25s}
+.paper:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:0 20px 40px -18px rgba(124,131,255,.5)}
+@media (prefers-reduced-motion:reduce){.paper,.thumb{transition:none!important;transform:none!important}}

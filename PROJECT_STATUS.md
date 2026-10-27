@@ -21,3 +21,8 @@ Next steps: deploy on Vercel with env vars; run the live test checklist; then pr
 Changes: full uncropped portrait with 3D tilt/zoom on hover; "V" logo mark; rotating role text (Data Analyst, Business Analyst, MIS Executive, Power BI Reporting); scroll reveals; spotlight/lift hover on cards, chips, buttons; public GitHub repos auto-listed as projects and used for a languages summary (cached 1h, no upload needed); admin slug auto-generated from title and only title required; public pages use 60s revalidation and admin saves revalidate immediately.
 Tested locally: tsc + build pass. Not browser-tested for visuals/mobile by Claude. Live site not re-tested.
 Next: review visuals with the owner (reference sites), mobile pass, profile/resume editing, cover/gallery/files, preview, tests, docs.
+
+## Version 3 (2026-10-27)
+Added: polymath positioning and recruiter-first hero (headline, sub line, "at a glance" proof strip with BCA 2026 / CGPA 8.2); designed SVG thumbnails per project type (BI, SQL, EDA); Telco churn analysis as an "In progress" card (no findings claimed); skills now show the repos where each was used; resume card styled as a paper document plus a generated ATS-friendly one-page PDF (public/resume.pdf, regenerate with scripts/make_resume.py); nav scroll highlighting, Resume button, mobile menu closes on tap.
+Tested locally: tsc + build pass; PDF is 1 page and extracts as clean text. Not browser-tested for visuals/mobile. Phone number deliberately left out of the public PDF.
+Next: review visuals with the owner and reference sites; edit skills/education/resume from admin; cover/gallery/files; tests; docs.
