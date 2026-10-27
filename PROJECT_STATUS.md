@@ -26,3 +26,7 @@ Next: review visuals with the owner (reference sites), mobile pass, profile/resu
 Added: polymath positioning and recruiter-first hero (headline, sub line, "at a glance" proof strip with BCA 2026 / CGPA 8.2); designed SVG thumbnails per project type (BI, SQL, EDA); Telco churn analysis as an "In progress" card (no findings claimed); skills now show the repos where each was used; resume card styled as a paper document plus a generated ATS-friendly one-page PDF (public/resume.pdf, regenerate with scripts/make_resume.py); nav scroll highlighting, Resume button, mobile menu closes on tap.
 Tested locally: tsc + build pass; PDF is 1 page and extracts as clean text. Not browser-tested for visuals/mobile. Phone number deliberately left out of the public PDF.
 Next: review visuals with the owner and reference sites; edit skills/education/resume from admin; cover/gallery/files; tests; docs.
+
+## Version 4 (2026-10-27)
+Changed: palette to navy + teal + gold; icon set (components/Icons.tsx) used on hero, proof strip, About, Skills, Education, Contact, footer; Projects nav now scrolls to #projects like the other tabs ("See all projects" opens the gallery page); content rewritten from the owner's resume (5 skill groups incl. business and thinking, full education, certifications, languages, churn and expense-tracker project cards); public/resume.pdf generated from the resume text (2 pages, includes the owner's phone number as written in his resume); "ATS" wording removed.
+Tested: tsc + build pass; PDF text extracts correctly. Not browser-tested.

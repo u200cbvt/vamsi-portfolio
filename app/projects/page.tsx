@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getProjects } from "@/lib/projects";
 import ProjectCard, { type CardItem } from "@/components/ProjectCard";
 import { getRepos } from "@/lib/github";
-import { inProgress } from "@/lib/content";
+import { extraProjects } from "@/lib/content";
 export const metadata: Metadata = { title: "Projects", description: "Data analysis projects by Vamsi." };
 export const revalidate = 60;
 export default async function Projects({ searchParams }: { searchParams: { q?: string; category?: string } }) {
@@ -11,7 +11,7 @@ export default async function Projects({ searchParams }: { searchParams: { q?: s
   const all: CardItem[] = [
     ...projects.map((p) => ({ key: p.id, title: p.title, summary: p.summary, category: p.category, tools: p.tools ?? [], href: `/projects/${p.slug}`, thumbnail: p.thumbnail_url, featured: p.featured })),
     ...gh.map((r) => ({ key: r.name, title: r.title, summary: r.description, category: r.language, href: r.url, external: true })),
-    ...inProgress,
+    ...extraProjects,
   ];
   const cats = Array.from(new Set(all.map((p) => p.category).filter(Boolean))) as string[];
   const q = (searchParams.q ?? "").toLowerCase();

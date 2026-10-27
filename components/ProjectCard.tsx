@@ -5,7 +5,7 @@ export type CardItem = { key: string; title: string; summary?: string | null; ca
 export default function ProjectCard({ p }: { p: CardItem }) {
   const inner = (<>
     {p.thumbnail ? <img src={p.thumbnail} alt={`${p.title} preview`} loading="lazy" className="mb-4 aspect-video w-full rounded-lg object-cover" /> : <Thumb text={`${p.title} ${p.summary ?? ""}`} />}
-    <p className="flex items-center gap-2 text-sm text-mute">{[p.category, p.featured ? "Featured" : null].filter(Boolean).join(" · ")}{p.badge && <span className="rounded-full border border-[#f2b866]/60 px-2 py-0.5 text-xs text-[#f2b866]">{p.badge}</span>}</p>
+    <p className="flex items-center gap-2 text-sm text-mute">{[p.category, p.featured ? "Featured" : null].filter(Boolean).join(" · ")}{p.badge && <span className="rounded-full border border-gold/60 px-2 py-0.5 text-xs text-gold">{p.badge}</span>}</p>
     <h3 className="mt-1 font-display text-xl">{p.title}</h3>
     <p className="mt-2 line-clamp-4 text-mute">{p.summary || "Open the repository to see the code and notebooks."}</p>
     {p.tools && p.tools.length > 0 && <p className="mt-3 text-sm text-paper/80">{p.tools.join(", ")}</p>}

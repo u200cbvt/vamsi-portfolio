@@ -1,29 +1,29 @@
 @tailwind base; @tailwind components; @tailwind utilities;
 html{scroll-behavior:smooth;scroll-padding-top:5rem}
-body{background:#0f1115;color:#ecebe6}
-:focus-visible{outline:2px solid #7c83ff;outline-offset:3px;border-radius:4px}
+body{background:#0a1120;color:#eef2f6}
+:focus-visible{outline:2px solid #2dd4bf;outline-offset:3px;border-radius:4px}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes draw{to{stroke-dashoffset:0}}
 .rise{animation:rise .7s ease-out both}
 .draw{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.8s .3s ease-out forwards}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rise{animation:none}.draw{animation:none;stroke-dashoffset:0}}
-.caret{display:inline-block;width:3px;height:.9em;margin-left:3px;background:#7c83ff;vertical-align:-.1em;animation:blink 1s steps(1) infinite}
+.caret{display:inline-block;width:3px;height:.9em;margin-left:3px;background:#2dd4bf;vertical-align:-.1em;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .tilt{transition:transform .25s ease;will-change:transform;transform-style:preserve-3d}
-.spot{position:relative;overflow:hidden;border:1px solid #262b36;background:#161a22;border-radius:12px;transition:transform .25s,border-color .25s,box-shadow .25s}
-.spot::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(124,131,255,.18),transparent 70%)}
-.spot:hover{transform:translateY(-5px);border-color:rgba(124,131,255,.55);box-shadow:0 14px 34px -14px rgba(124,131,255,.45)}
+.spot{position:relative;overflow:hidden;border:1px solid #1f2b42;background:#111a2c;border-radius:12px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.spot::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(45,212,191,.18),transparent 70%)}
+.spot:hover{transform:translateY(-5px);border-color:rgba(45,212,191,.55);box-shadow:0 14px 34px -14px rgba(45,212,191,.45)}
 .spot:hover::before{opacity:1}
-.ulink{position:relative}.ulink::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:100%;background:#7c83ff;transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.ulink{position:relative}.ulink::after{content:"";position:absolute;left:0;bottom:-4px;height:2px;width:100%;background:#2dd4bf;transform:scaleX(0);transform-origin:left;transition:transform .25s}
 .ulink:hover::after{transform:scaleX(1)}
 .btn{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:12px 20px;transition:transform .2s,box-shadow .2s,border-color .2s}
 .btn:hover{transform:translateY(-2px)}.btn:hover .arr{transform:translateX(4px)}.arr{transition:transform .2s}
-.chip{display:inline-block;border:1px solid #262b36;border-radius:999px;padding:4px 12px;transition:transform .2s,border-color .2s,color .2s}
-.chip:hover{transform:translateY(-2px) scale(1.06);border-color:#7c83ff;color:#ecebe6}
-.glow{background:radial-gradient(600px circle at 70% 20%,rgba(124,131,255,.12),transparent 60%)}
+.chip{display:inline-block;border:1px solid #1f2b42;border-radius:999px;padding:4px 12px;transition:transform .2s,border-color .2s,color .2s}
+.chip:hover{transform:translateY(-2px) scale(1.06);border-color:#2dd4bf;color:#eef2f6}
+.glow{background:radial-gradient(600px circle at 70% 20%,rgba(45,212,191,.12),transparent 60%)}
 @media (prefers-reduced-motion:reduce){.tilt,.spot,.btn,.chip,.rv{transition:none!important;transform:none!important}.caret{animation:none}}
 .ulink[aria-current]::after{transform:scaleX(1)}
 .thumb{transition:transform .4s ease}.spot:hover .thumb{transform:scale(1.04)}
 .paper{background:#f4f2ec;color:#16181d;border-radius:12px;transition:transform .25s,box-shadow .25s}
-.paper:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:0 20px 40px -18px rgba(124,131,255,.5)}
+.paper:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:0 20px 40px -18px rgba(45,212,191,.5)}
 @media (prefers-reduced-motion:reduce){.paper,.thumb{transition:none!important;transform:none!important}}

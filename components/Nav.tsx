@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-const links = [["Home", "/", "top"], ["About", "/#about", "about"], ["Projects", "/projects", "projects"], ["Skills", "/#skills", "skills"], ["Education", "/#education", "education"], ["Contact", "/#contact", "contact"]];
+const links = [["Home", "/", "top"], ["About", "/#about", "about"], ["Projects", "/#projects", "projects"], ["Skills", "/#skills", "skills"], ["Education", "/#education", "education"], ["Contact", "/#contact", "contact"]];
 export default function Nav() {
   const path = usePathname();
   const [active, setActive] = useState(""), [open, setOpen] = useState(false);
